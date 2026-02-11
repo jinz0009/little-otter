@@ -215,13 +215,25 @@ elif menu == "👉 在线DIY手串":
     else:
         st.write("暂无已选材料。")
 
-
-# --- 4. 定制测试 (保持不变) ---
+# --- 4. 定制测试 (交互功能) ---
 elif menu == "定制测试":
     st.header("🔮 寻找你的本命水晶")
-    # (省略之前的测试代码)
-    st.write("测试功能开发中...")
+    st.write("回答 3 个直觉问题，我们将为你匹配最适合的水晶。")
+    
+    q1 = st.select_slider("你最近的状态更倾向于？", options=["极度焦虑", "平淡如水", "充满斗志"])
+    q2 = st.color_picker("如果你现在深处森林，你最希望看到的颜色是？", "#7e6c6c")
+    q3 = st.multiselect("你希望提升哪方面的能量？", ["沟通力", "专注力", "桃花运", "财运"])
+    
+    if st.button("生成我的匹配报告"):
+        st.balloons()
+        st.write("### 匹配结果")
+        if "财运" in q3:
+            st.write("✨ 建议选择：**金发晶 (Gold Rutilated Quartz)**")
+            st.write("它能增强你的决断力与行动力，吸引财富磁场。")
+        else:
+            st.write("✨ 建议选择：**粉晶 (Rose Quartz)**")
+            st.write("温柔的色彩能抚平焦虑，助你开启人缘磁场。")
 
 # --- 页脚 ---
 st.markdown("---")
-st.caption("© 2026 LUXE CRYSTAL 灵石雅集 | Python Streamlit 驱动")
+st.caption("© 2026 LUXE CRYSTAL 灵石雅集 ")
