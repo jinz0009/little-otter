@@ -225,22 +225,60 @@ elif menu == "DIY Studio":
             st.success("Design saved to your wish list.")
             st.balloons()
 
-# 4. Energy Quiz - 定制测试
+# --- 4. Energy Quiz - 定制测试 (Little Otter 风格版) ---
 elif menu == "Energy Quiz":
     st.markdown("<h2 style='text-align:center; padding:40px 0;'>crystal oracle</h2>", unsafe_allow_html=True)
-    st.markdown("<div style='max-width:600px; margin:0 auto; padding:40px; border:1px solid #EEE; background:white;'>", unsafe_allow_html=True)
     
-    q1 = st.select_slider("How do you feel today?", options=["Restless", "Balanced", "Inspired"])
-    q3 = st.multiselect("Energy you want to enhance:", ["Abundance", "Love", "Inner Peace", "Protection"])
+    # 使用 Wix 风格的白底细边框容器包裹测试题
+    st.markdown("""
+        <div style='max-width:700px; margin:0 auto; padding:40px; border:1px solid #EEE; background:white; margin-bottom:50px;'>
+            <h3 style='text-align:center; margin-top:0;'>寻找你的本命水晶</h3>
+            <p style='text-align:center; color:#888; font-size:13px;'>回答 3 个直觉问题，我们将为你匹配最适合的水晶能量。</p>
+            <br>
+    """, unsafe_allow_html=True)
     
-    if st.button("Consult the Oracle"):
+    # --- 问题区域 ---
+    # Q1: 心理状态滑块
+    q1 = st.select_slider(
+        "1. 你最近的状态更倾向于？", 
+        options=["极度焦虑", "平淡如水", "充满斗志"]
+    )
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Q2: 直觉选色器
+    st.write("2. 如果你现在深处森林，你最希望看到的颜色是？")
+    q2 = st.color_picker("点击色块选择你的直觉色", "#7e6c6c", key="quiz_color")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Q3: 能量诉求多选
+    q3 = st.multiselect(
+        "3. 你希望提升哪方面的能量？", 
+        ["沟通力", "专注力", "桃花运", "财运"],
+        placeholder="请选择 (可多选)"
+    )
+    
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    
+    # 生成报告按钮
+    if st.button("生成我的匹配报告"):
+        st.balloons()
         st.markdown("---")
         st.markdown("### 🦦 little otter's guide")
-        if "Abundance" in q3:
-            st.write("**Pick: Citrine (黄水晶)** - To light up your path to prosperity.")
+        
+        # 结果逻辑判断
+        if "财运" in q3:
+            st.write("### ✨ 建议选择：**金发晶 (Gold Rutilated Quartz)**")
+            st.write("在你选中的色彩与意向中，金发晶的频率最能引起共鸣。它能增强你的决断力与行动力，吸引财富磁场，让你的“斗志”化为丰硕的果实。")
+        elif "桃花运" in q3 or "沟通力" in q3:
+            st.write("### ✨ 建议选择：**粉晶 (Rose Quartz)**")
+            st.write("温柔的色彩能抚平内心的焦虑。粉晶不仅是吸引良缘，更能帮助你开启与自我、与他人的温和沟通视角。")
         else:
-            st.write("**Pick: Aquamarine (海蓝宝)** - To flow smoothly through challenges.")
-    st.markdown("</div>", unsafe_allow_html=True)
+            st.write("### ✨ 建议选择：**海蓝宝 (Aquamarine)**")
+            st.write("针对你追求的平衡状态，海蓝宝如同流动的水，能带走负累，让你在平淡如水的生活中发现深邃的智慧。")
+
+    st.markdown("</div>", unsafe_allow_html=True) # 结束外层白色容器
 
 # 页脚
 st.markdown("""
@@ -251,4 +289,4 @@ st.markdown("""
 """, unsafe_allow_html=True)
 # --- 页脚 ---
 st.markdown("---")
-st.caption("© 2026 LUXE CRYSTAL 灵石雅集 ")
+st.caption("© 2026 LITTLE OTTER ")
