@@ -720,61 +720,65 @@ elif menu == "About Us / 关于我们":
     text-align: center;
     color: #333333;
     letter-spacing: 4px;
-    margin-bottom: 40px;
+    margin-bottom: 45px;
 }
 
-.about-hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 70px;
+.packaging-section {
+    display: grid;
+    grid-template-columns: 1fr 1.45fr 1.2fr;
+    gap: 50px;
+    align-items: center;
     margin-bottom: 110px;
 }
 
-.about-text {
-    flex: 1;
-    max-width: 520px;
-    padding-top: 40px;
-}
-
-.about-text-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    letter-spacing: 3px;
+.packaging-left-title {
+    font-size: 22px;
     color: #333333;
-    margin-bottom: 25px;
+    letter-spacing: 1px;
+    line-height: 1.7;
 }
 
-.about-text p {
-    color: #555555;
+.packaging-content {
+    color: #222222;
+}
+
+.packaging-content h2 {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0px !important;
+    text-transform: none !important;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.packaging-content ul {
+    margin: 0;
+    padding-left: 22px;
+}
+
+.packaging-content li {
+    font-size: 18px;
+    line-height: 1.55;
+    margin-bottom: 4px;
+}
+
+.packaging-cn {
+    color: #666666;
     font-size: 15px;
-    line-height: 1.85;
-    letter-spacing: 0.5px;
-    margin-bottom: 18px;
-}
-
-.about-note {
-    margin-top: 28px;
-    padding: 18px 22px;
-    border-left: 2px solid #A68B67;
-    background: #FAF8F4;
-    color: #6B6258;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.about-image-wrap {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
+    margin-left: 6px;
 }
 
 .about-package-img {
-    width: 420px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 420px;
     height: auto;
     object-fit: cover;
     border: 1px solid #EFEFEF;
+}
+
+.about-image-wrap {
+    display: flex;
+    justify-content: center;
 }
 
 .contact-row {
@@ -782,7 +786,7 @@ elif menu == "About Us / 关于我们":
     justify-content: space-around;
     align-items: flex-start;
     gap: 80px;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .contact-item {
@@ -818,27 +822,35 @@ elif menu == "About Us / 关于我们":
         padding: 30px 20px 80px 20px;
     }
 
-    .about-hero {
-        flex-direction: column;
-        align-items: center;
-        gap: 35px;
+    .packaging-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
         margin-bottom: 70px;
     }
 
-    .about-text {
-        max-width: 100%;
-        padding-top: 0;
+    .packaging-content {
         text-align: left;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .packaging-content h2 {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .packaging-content li {
+        font-size: 16px;
     }
 
     .about-image-wrap {
         justify-content: center;
-        width: 100%;
     }
 
     .about-package-img {
-        width: 100%;
         max-width: 420px;
+        width: 100%;
     }
 
     .contact-row {
@@ -859,7 +871,11 @@ elif menu == "About Us / 关于我们":
     wechat_base64 = image_to_base64("wechat.jpg")
 
     if package_base64:
-        package_html = f'<img class="about-package-img" src="data:image/jpeg;base64,{package_base64}">'
+        package_html = (
+            f'<img class="about-package-img" '
+            f'src="data:image/jpeg;base64,{package_base64}" '
+            f'alt="Crystal Packaging">'
+        )
     else:
         package_html = (
             '<div style="width:420px; height:300px; border:1px solid #DDD; color:#999; '
@@ -895,7 +911,7 @@ elif menu == "About Us / 关于我们":
         instagram_base64,
         "instagram.jpg",
         "Instagram",
-        "社交平台",
+        "Little Otter Crystal",
         "#"
     )
 
@@ -903,28 +919,36 @@ elif menu == "About Us / 关于我们":
         email_base64,
         "email.jpg",
         "Email",
-        "邮箱",
-        "mailto:your-email@example.com"
+        "littleotter@gmail.com",
+        "mailto:littleotter@gmail.com"
     )
 
     wechat_html = contact_icon_html(
         wechat_base64,
         "wechat.jpg",
         "WeChat",
-        "微信",
+        "Little Otter Crystal",
         "#"
     )
 
-    about_text_html = (
-        '<div class="about-text">'
-        '<div class="about-text-title">little otter story</div>'
-        '<p>Little Otter is a handcrafted crystal studio inspired by the gentle habit of otters treasuring their favorite stones. We believe every crystal carries its own texture, memory, and quiet energy.</p>'
-        '<p>Each bracelet is created with natural stones, soft color harmony, and a sense of everyday calm. Rather than chasing excessive polish, we value authenticity and the small imperfections that make every piece unique.</p>'
-        '<p>Little Otter 是一个天然水晶手作品牌，灵感来自小水獭珍藏石头的温柔习惯。我们相信，每一颗水晶都有属于自己的纹理、记忆与安静能量。</p>'
-        '<p>每一件作品都以天然石、柔和配色与日常陪伴感为核心。我们不追求过度打磨后的完美，而更珍视自然石本身的真实与独特。</p>'
-        '<div class="about-note">'
-        'For custom designs, product details, packaging, or collaboration inquiries, please contact us through Instagram, Email, or WeChat.<br>'
-        '如需定制设计、产品咨询、包装信息或合作沟通，欢迎通过 Instagram、邮箱或微信联系我们。'
+    packaging_html = (
+        '<div class="packaging-section">'
+        '<div class="packaging-left-title">'
+        'Crystal Packaging<br>水晶包装'
+        '</div>'
+        '<div class="packaging-content">'
+        '<h2>Complimentary Gift Set<br>赠品套装</h2>'
+        '<ul>'
+        '<li>Premium Crystal Gift Box <span class="packaging-cn">高级水晶礼盒</span></li>'
+        '<li>Crystal Polishing Cloth <span class="packaging-cn">水晶擦拭布</span></li>'
+        '<li>Crystal Care Instruction Card <span class="packaging-cn">水晶保养说明卡</span></li>'
+        '<li>White Quartz Cleansing Stones <span class="packaging-cn">白水晶净化石</span></li>'
+        '<li>Personalized Gift Message Card <span class="packaging-cn">个性化祝福卡</span></li>'
+        '<li>Complimentary Replacement String <span class="packaging-cn">备用替换绳</span></li>'
+        '</ul>'
+        '</div>'
+        '<div class="about-image-wrap">'
+        f'{package_html}'
         '</div>'
         '</div>'
     )
@@ -932,12 +956,7 @@ elif menu == "About Us / 关于我们":
     about_html = (
         '<div class="about-container">'
         '<h2 class="about-title">about us / 关于我们</h2>'
-        '<div class="about-hero">'
-        f'{about_text_html}'
-        '<div class="about-image-wrap">'
-        f'{package_html}'
-        '</div>'
-        '</div>'
+        f'{packaging_html}'
         '<div class="contact-row">'
         f'{instagram_html}'
         f'{email_html}'
