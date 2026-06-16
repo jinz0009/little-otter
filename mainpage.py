@@ -56,19 +56,7 @@ footer {
     display: none !important;
 }
 
-/* 隐藏 Deploy / GitHub 相关元素，但不要隐藏 header 和侧边栏按钮 */
-[data-testid="stDecoration"],
-[data-testid="stStatusWidget"],
-[data-testid="manage-app-button"],
-.stDeployButton,
-a[href*="github.com"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-
-/* 关键：不要隐藏 header，否则手机端侧边栏按钮会消失 */
+/* 关键：保留 header，手机端侧边栏按钮依赖 header */
 header {
     visibility: visible !important;
     display: block !important;
@@ -77,19 +65,31 @@ header {
     z-index: 999999 !important;
 }
 
-/* 关键：保留顶部按钮容器 */
-[data-testid="stHeaderActionElements"] {
+/* 隐藏右上角 GitHub / Deploy / Share / Toolbar 区域 */
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="manage-app-button"],
+[data-testid="stHeaderActionElements"],
+.stDeployButton,
+.stActionButton,
+a[href*="github.com"],
+button[title*="GitHub"],
+button[aria-label*="GitHub"],
+a[title*="GitHub"],
+a[aria-label*="GitHub"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 关键：强制保留左上角侧边栏展开按钮 */
+[data-testid="collapsedControl"] {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
-}
-
-/* 关键：保留侧边栏收起后的展开按钮 */
-[data-testid="collapsedControl"] {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    z-index: 999999 !important;
+    z-index: 1000000 !important;
     pointer-events: auto !important;
 }
 
@@ -98,7 +98,7 @@ header {
     padding-top: 2rem !important;
 }
 
-/* 手机端强制显示左上角侧边栏按钮 */
+/* 手机端强制显示侧边栏按钮 */
 @media (max-width: 768px) {
     header {
         visibility: visible !important;
@@ -109,11 +109,14 @@ header {
     }
 
     [data-testid="collapsedControl"] {
-        display: block !important;
+        display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
-        z-index: 999999 !important;
+        z-index: 1000000 !important;
         pointer-events: auto !important;
+        position: fixed !important;
+        top: 0.75rem !important;
+        left: 0.75rem !important;
     }
 
     [data-testid="stSidebar"] {
