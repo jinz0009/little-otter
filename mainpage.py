@@ -550,7 +550,7 @@ elif menu == "DIY Studio / 手作工坊":
         total = sum(BEAD_DB[b]["price"] for b in st.session_state.diy_beads)
 
         st.markdown("#### Estimate / 预估价格")
-        st.markdown(f"<h2 style='color:#A68B67;'>S$ {total}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='color:#A68B67;'>SGD {total}</h2>", unsafe_allow_html=True)
 
         if st.button("❤️ Save Design / 保存设计"):
             st.success("Design saved to your wish list. / 已保存到你的心愿单。")
@@ -811,7 +811,7 @@ elif menu == "About Us / 关于我们":
         instagram_base64,
         "instagram.jpg",
         "Instagram",
-        "社交平台",
+        "Little Otter Crystal",
         "#"
     )
 
@@ -819,15 +819,15 @@ elif menu == "About Us / 关于我们":
         email_base64,
         "email.jpg",
         "Email",
-        "邮箱",
-        "mailto:your-email@example.com"
+        "littleotter@gmail.com",
+        "#"
     )
 
     wechat_html = contact_icon_html(
         wechat_base64,
         "wechat.jpg",
         "WeChat",
-        "微信",
+        "Little Otter Crystal",
         "#"
     )
 
