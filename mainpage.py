@@ -32,10 +32,11 @@ def get_query_param_value(name):
         return value[0] if value else None
 
 
-# --- 3. 隐藏 GitHub / Deploy / Viewer Badge，但保留侧边栏按钮 ---
+# --- 3. 隐藏 GitHub / Deploy / Viewer Badge，但保留手机端侧边栏按钮 ---
 st.markdown(
 """
 <style>
+/* 隐藏旧版 Streamlit Cloud viewer badge / GitHub badge */
 .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
 .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
 .viewerBadge_text__1JaDK {
@@ -43,23 +44,23 @@ st.markdown(
     visibility: hidden !important;
 }
 
+/* 隐藏主菜单 */
 #MainMenu {
     visibility: hidden !important;
     display: none !important;
 }
 
+/* 隐藏 footer */
 footer {
     visibility: hidden !important;
     display: none !important;
 }
 
-[data-testid="stToolbar"],
+/* 隐藏 Deploy / GitHub 相关元素，但不要隐藏 header 和侧边栏按钮 */
 [data-testid="stDecoration"],
 [data-testid="stStatusWidget"],
 [data-testid="manage-app-button"],
-[data-testid="stHeaderActionElements"],
 .stDeployButton,
-.stActionButton,
 a[href*="github.com"] {
     display: none !important;
     visibility: hidden !important;
@@ -67,19 +68,29 @@ a[href*="github.com"] {
     pointer-events: none !important;
 }
 
-/* 不隐藏 header，否则手机端和收起后的侧边栏按钮会消失 */
+/* 关键：不要隐藏 header，否则手机端侧边栏按钮会消失 */
 header {
     visibility: visible !important;
-    height: auto !important;
+    display: block !important;
+    height: 3rem !important;
     background: transparent !important;
+    z-index: 999999 !important;
 }
 
-/* 保留收起后重新打开侧边栏的按钮 */
+/* 关键：保留顶部按钮容器 */
+[data-testid="stHeaderActionElements"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* 关键：保留侧边栏收起后的展开按钮 */
 [data-testid="collapsedControl"] {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     z-index: 999999 !important;
+    pointer-events: auto !important;
 }
 
 /* 页面顶部间距 */
@@ -87,11 +98,12 @@ header {
     padding-top: 2rem !important;
 }
 
-/* 手机端确保侧边栏按钮显示 */
+/* 手机端强制显示左上角侧边栏按钮 */
 @media (max-width: 768px) {
     header {
         visibility: visible !important;
-        height: 3rem !important;
+        display: block !important;
+        height: 3.2rem !important;
         background: transparent !important;
         z-index: 999999 !important;
     }
@@ -101,6 +113,11 @@ header {
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 999999 !important;
+        pointer-events: auto !important;
+    }
+
+    [data-testid="stSidebar"] {
+        z-index: 999998 !important;
     }
 }
 </style>
@@ -565,6 +582,8 @@ elif menu == "DIY Studio / 手作工坊":
         html_beads = "<p style='color:#999; z-index:1;'>add your first bead... / 添加第一颗水晶</p>"
     else:
         for bead_name in st.session_state.diy_beads:
+            if bead_name not in BEAD_DB:
+                continue
             bead_info = BEAD_DB[bead_name]
             css_class = "bead-spacer" if bead_info["type"] == "spacer" else "bead-circle"
             html_beads += f'<div class="{css_class}" style="background: {bead_info["color"]};" title="{bead_info["display"]}"></div>'
@@ -618,7 +637,11 @@ elif menu == "DIY Studio / 手作工坊":
             st.rerun()
 
     with c3:
-        total = sum(BEAD_DB[b]["price"] for b in st.session_state.diy_beads)
+        total = sum(
+            BEAD_DB[b]["price"]
+            for b in st.session_state.diy_beads
+            if b in BEAD_DB
+        )
 
         st.markdown("#### Estimate / 预估价格")
         st.markdown(f"<h2 style='color:#A68B67;'>SGD {total}</h2>", unsafe_allow_html=True)
