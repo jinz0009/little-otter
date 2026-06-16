@@ -212,7 +212,6 @@ if menu == "Home":
         st.write("""
             Just as little otters treasure the stones they love most, carrying them close wherever they go, Little Otter was created to help you discover the crystal that speaks to your soul. Rather than pursuing perfection through excessive polishing, we value authenticity—the natural texture of each stone and the energy it carries. Every handcrafted piece is a touchable sense of calm, a quiet companion you can keep with you.
         """)
-        st.image("关于我们-产品包装图-1.jpg", use_container_width=True)
 
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("<h2 style='text-align:center; padding:30px 0 20px 0;'>Crystal Collection</h2>", unsafe_allow_html=True)
