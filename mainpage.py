@@ -201,7 +201,7 @@ if menu == "Home":
     st.image("首页logo图.jpg", width=520)
     st.markdown("""
         <div style="text-align:center; padding: 10px 0 30px 0;">
-            <p style="letter-spacing:6px; text-transform:uppercase; font-size:12px; color:#7D7A75; margin-top:0;">源于自然的治愈 · 灵石手作</p>
+            <p style="letter-spacing:6px; text-transform:uppercase; font-size:12px; color:#7D7A75; margin-top:0;">Little Otter Crystal</p>
         </div>
     """, unsafe_allow_html=True)
 
