@@ -1,5 +1,7 @@
 import streamlit as st
 from collections import Counter
+import base64
+from pathlib import Path
 
 # --- 1. 深度页面配置与视觉注入 ---
 st.set_page_config(page_title="little otter | 灵石手作", page_icon="🦦", layout="wide")
@@ -173,6 +175,26 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# --- 本地图片转 base64，用于精准居中显示 logo / 点击图片 ---
+def image_to_base64(image_path):
+    image_path = Path(image_path)
+    if not image_path.exists():
+        return None
+    return base64.b64encode(image_path.read_bytes()).decode()
+
+
+def get_query_param_value(name):
+    try:
+        value = st.query_params.get(name)
+        if isinstance(value, list):
+            return value[0] if value else None
+        return value
+    except Exception:
+        params = st.experimental_get_query_params()
+        value = params.get(name, [None])
+        return value[0] if value else None
+
+
 # --- 2. 状态与数据初始化 ---
 if 'diy_beads' not in st.session_state:
     st.session_state.diy_beads = []
@@ -191,21 +213,25 @@ BEAD_DB = {
 # --- 3. 侧边栏导航 ---
 st.sidebar.markdown("<h2 style='letter-spacing:4px; color:#5D5B57;'>little otter</h2>", unsafe_allow_html=True)
 st.sidebar.markdown("<p style='font-size:10px; letter-spacing:1px; margin-top:-15px;'>HANDCRAFTED ENERGY</p>", unsafe_allow_html=True)
-menu = st.sidebar.radio("Navigation", ["Home", "Collections", "DIY Studio", "Energy Quiz"])
+collection_item_from_url = get_query_param_value("collection_item")
+default_menu_index = 1 if collection_item_from_url else 0
+menu = st.sidebar.radio("Navigation", ["Home", "Collections", "DIY Studio", "Energy Quiz"], index=default_menu_index)
 
 # --- 4. 页面内容展示 ---
 
 # 1. Home - 品牌首页
 if menu == "Home":
-    st.markdown("<div style='text-align:center; padding:40px 0 10px 0;'>", unsafe_allow_html=True)
-    st.image("首页logo图.jpg", width=520)
-    st.markdown("""
-        <div style="text-align:center; padding: 10px 0 30px 0;">
-            <p style="letter-spacing:6px; text-transform:uppercase; font-size:12px; color:#7D7A75; margin-top:0;">Little Otter Crystal</p>
-        </div>
-    """, unsafe_allow_html=True)
+    logo_base64 = image_to_base64("首页logo图.jpg")
+    if logo_base64:
+        st.markdown(f"""
+            <div style="width:100%; display:flex; justify-content:center; align-items:center; padding:40px 0 20px 0;">
+                <img src="data:image/jpeg;base64,{logo_base64}" style="width:520px; max-width:90%; display:block;">
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.warning("未找到首页logo图.jpg，请确认图片和代码文件在同一个文件夹。")
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
         st.markdown("<h2 style='text-align:center;'>our story</h2>", unsafe_allow_html=True)
@@ -230,26 +256,161 @@ if menu == "Home":
 
 # 2. Collections - 系列展示
 elif menu == "Collections":
-    st.markdown("<h2 style='text-align:center; padding:50px 0;'>the collection</h2>", unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+        [data-testid="stAppViewContainer"] {
+            background-color: #000000 !important;
+        }
+
+        .collection-title {
+            text-align: center;
+            padding: 20px 0 40px 0;
+            color: #ffffff;
+            letter-spacing: 4px;
+        }
+
+        .collection-card {
+            text-align: center;
+            margin-bottom: 38px;
+        }
+
+        .collection-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: 0.25s ease;
+        }
+
+        .collection-card img:hover {
+            transform: scale(1.015);
+            opacity: 0.88;
+        }
+
+        .collection-price {
+            color: #333333;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 18px 0 12px 0;
+            letter-spacing: 1px;
+        }
+
+        .collection-button {
+            display: inline-block;
+            width: 86%;
+            background: #ffffff;
+            color: #555555 !important;
+            border: 1px solid #333333;
+            padding: 15px 0;
+            text-decoration: none !important;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.25s ease;
+        }
+
+        .collection-button:hover {
+            background: #333333;
+            color: #ffffff !important;
+        }
+
+        .detail-image {
+            width: 100%;
+            max-height: 680px;
+            object-fit: contain;
+            background: #000000;
+            display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: 1px solid #ffffff;
+            padding: 10px 24px;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .back-link:hover {
+            background: #ffffff;
+            color: #000000 !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
     products = [
-        {"name": "river flow - 海蓝宝", "price": "¥ 399.00", "img": "首页-产品展示图-1.jpg"},
-        {"name": "sunset glow - 草莓晶", "price": "¥ 458.00", "img": "首页-产品展示图-2.jpg"},
-        {"name": "deep forest - 绿幽灵", "price": "¥ 520.00", "img": "首页-产品展示图-3.jpg"},
-        {"name": "soft light - 月光石", "price": "¥ 468.00", "img": "首页-产品展示图-4.jpg"},
+        {"id": 1, "price": "299"},
+        {"id": 2, "price": "99"},
+        {"id": 3, "price": "128"},
+        {"id": 4, "price": "269"},
+        {"id": 5, "price": "269"},
+        {"id": 6, "price": "269"},
+        {"id": 7, "price": "349"},
+        {"id": 8, "price": "128"},
+        {"id": 9, "price": "168"},
+        {"id": 10, "price": "168"},
+        {"id": 11, "price": "168"},
+        {"id": 12, "price": "168"},
     ]
 
-    cols = st.columns(4)
-    for i, p in enumerate(products):
-        with cols[i]:
-            st.image(p["img"], use_container_width=True)
-            st.markdown(f"""
-                <div class="product-box">
-                    <h3 style="font-size:1.1rem;">{p['name']}</h3>
-                    <p style="color:#A68B67; font-weight:500;">{p['price']}</p>
-                </div>
-            """, unsafe_allow_html=True)
-            st.button("Explore More", key=f"shop_{i}")
+    selected_item = get_query_param_value("collection_item")
+
+    if selected_item:
+        selected_id = int(selected_item) if str(selected_item).isdigit() else 1
+
+        st.markdown('<a class="back-link" href="?" target="_self">← BACK TO COLLECTION</a>', unsafe_allow_html=True)
+        st.markdown(f"<h2 class='collection-title'>collection {selected_id}</h2>", unsafe_allow_html=True)
+
+        detail_images = [
+            f"{selected_id}-1.jpg",
+            f"{selected_id}-2.jpg",
+        ]
+
+        detail_cols = st.columns(2)
+        for i, img_name in enumerate(detail_images):
+            with detail_cols[i % 2]:
+                img_base64 = image_to_base64(img_name)
+                if img_base64:
+                    st.markdown(
+                        f'<img class="detail-image" src="data:image/jpeg;base64,{img_base64}">',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.warning(f"未找到详情图：{img_name}")
+
+    else:
+        st.markdown("<h2 class='collection-title'>the collection</h2>", unsafe_allow_html=True)
+
+        for row_start in range(0, len(products), 4):
+            cols = st.columns(4)
+            for col, product in zip(cols, products[row_start:row_start + 4]):
+                with col:
+                    cover_name = f"{product['id']}.jpg"
+                    cover_base64 = image_to_base64(cover_name)
+
+                    if cover_base64:
+                        cover_html = f"""
+                            <a href="?collection_item={product['id']}" target="_self">
+                                <img src="data:image/jpeg;base64,{cover_base64}" alt="collection {product['id']}">
+                            </a>
+                        """
+                    else:
+                        cover_html = f"""
+                            <a href="?collection_item={product['id']}" target="_self">
+                                <div style="height:350px; display:flex; align-items:center; justify-content:center; border:1px solid #333; color:#999; background:#111;">
+                                    未找到 {cover_name}
+                                </div>
+                            </a>
+                        """
+
+                    st.markdown(f"""
+                        <div class="collection-card">
+                            {cover_html}
+                            <div class="collection-price">S$: &nbsp;{product['price']}</div>
+                            <a class="collection-button" href="?collection_item={product['id']}" target="_self">EXPLORE MORE</a>
+                        </div>
+                    """, unsafe_allow_html=True)
 
 # 3. DIY Studio - 在线DIY (Little Otter 核心交互)
 elif menu == "DIY Studio":
