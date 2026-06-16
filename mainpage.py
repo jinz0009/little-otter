@@ -210,10 +210,24 @@ if menu == "Home":
     with col2:
         st.markdown("<h2 style='text-align:center;'>our story</h2>", unsafe_allow_html=True)
         st.write("""
-            正如小水獭总会挑选最心仪的那块石头揣在兜里，**little otter** 诞生的初衷，是为你寻找那颗能引起灵魂共鸣的矿石。
-            我们不追求过度的雕琢，只在意自然的触感与能量的传递。每一串手作，都是一份可以触碰的平静。
+            Just as little otters treasure the stones they love most, carrying them close wherever they go, Little Otter was created to help you discover the crystal that speaks to your soul. Rather than pursuing perfection through excessive polishing, we value authenticity—the natural texture of each stone and the energy it carries. Every handcrafted piece is a touchable sense of calm, a quiet companion you can keep with you.
         """)
         st.image("关于我们-产品包装图-1.jpg", use_container_width=True)
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center; padding:30px 0 20px 0;'>Crystal Collection</h2>", unsafe_allow_html=True)
+
+    showcase_images = [
+        "首页-产品展示图-1.jpg",
+        "首页-产品展示图-2.jpg",
+        "首页-产品展示图-3.jpg",
+        "首页-产品展示图-4.jpg",
+    ]
+
+    showcase_cols = st.columns(4)
+    for i, img in enumerate(showcase_images):
+        with showcase_cols[i]:
+            st.image(img, use_container_width=True)
 
 # 2. Collections - 系列展示
 elif menu == "Collections":
