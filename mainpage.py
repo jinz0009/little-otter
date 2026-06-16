@@ -4,8 +4,12 @@ import base64
 from pathlib import Path
 
 # --- 1. 页面配置 ---
-st.set_page_config(page_title="little otter | 灵石手作", page_icon="🦦", layout="wide")
-
+st.set_page_config(
+    page_title="little otter | 灵石手作",
+    page_icon="🦦",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # --- 2. 工具函数 ---
 def image_to_base64(image_path):
