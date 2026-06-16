@@ -11,6 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 # --- 2. 工具函数 ---
 def image_to_base64(image_path):
     image_path = Path(image_path)
@@ -31,18 +32,7 @@ def get_query_param_value(name):
         return value[0] if value else None
 
 
-def img_html(base64_data, class_name="", alt="", style=""):
-    if not base64_data:
-        return ""
-    return (
-        f'<img class="{class_name}" '
-        f'src="data:image/jpeg;base64,{base64_data}" '
-        f'alt="{alt}" '
-        f'style="{style}">'
-    )
-
-
-# --- 3. 隐藏 Streamlit 顶部菜单 / GitHub / Deploy / Viewer Badge ---
+# --- 3. 隐藏 GitHub / Deploy / Viewer Badge，但保留侧边栏按钮 ---
 st.markdown(
 """
 <style>
@@ -56,11 +46,6 @@ st.markdown(
 #MainMenu {
     visibility: hidden !important;
     display: none !important;
-}
-
-header {
-    visibility: hidden !important;
-    height: 0rem !important;
 }
 
 footer {
@@ -79,12 +64,44 @@ a[href*="github.com"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    height: 0 !important;
     pointer-events: none !important;
 }
 
+/* 不隐藏 header，否则手机端和收起后的侧边栏按钮会消失 */
+header {
+    visibility: visible !important;
+    height: auto !important;
+    background: transparent !important;
+}
+
+/* 保留收起后重新打开侧边栏的按钮 */
+[data-testid="collapsedControl"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999999 !important;
+}
+
+/* 页面顶部间距 */
 .block-container {
     padding-top: 2rem !important;
+}
+
+/* 手机端确保侧边栏按钮显示 */
+@media (max-width: 768px) {
+    header {
+        visibility: visible !important;
+        height: 3rem !important;
+        background: transparent !important;
+        z-index: 999999 !important;
+    }
+
+    [data-testid="collapsedControl"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 999999 !important;
+    }
 }
 </style>
 """,
@@ -554,7 +571,7 @@ elif menu == "DIY Studio / 手作工坊":
         total = sum(BEAD_DB[b]["price"] for b in st.session_state.diy_beads)
 
         st.markdown("#### Estimate / 预估价格")
-        st.markdown(f"<h2 style='color:#A68B67;'>SGD {total}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='color:#A68B67;'>S$ {total}</h2>", unsafe_allow_html=True)
 
         if st.button("❤️ Save Design / 保存设计"):
             st.success("Design saved to your wish list. / 已保存到你的心愿单。")
@@ -706,16 +723,55 @@ elif menu == "About Us / 关于我们":
     margin-bottom: 40px;
 }
 
-.about-top {
+.about-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 70px;
+    margin-bottom: 110px;
+}
+
+.about-text {
+    flex: 1;
+    max-width: 520px;
+    padding-top: 40px;
+}
+
+.about-text-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+    color: #333333;
+    margin-bottom: 25px;
+}
+
+.about-text p {
+    color: #555555;
+    font-size: 15px;
+    line-height: 1.85;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+}
+
+.about-note {
+    margin-top: 28px;
+    padding: 18px 22px;
+    border-left: 2px solid #A68B67;
+    background: #FAF8F4;
+    color: #6B6258;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.about-image-wrap {
+    flex: 1;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
-    margin-bottom: 120px;
 }
 
 .about-package-img {
     width: 420px;
-    max-width: 90%;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
     border: 1px solid #EFEFEF;
@@ -758,14 +814,38 @@ elif menu == "About Us / 关于我们":
 }
 
 @media (max-width: 900px) {
-    .about-top {
+    .about-container {
+        padding: 30px 20px 80px 20px;
+    }
+
+    .about-hero {
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+        margin-bottom: 70px;
+    }
+
+    .about-text {
+        max-width: 100%;
+        padding-top: 0;
+        text-align: left;
+    }
+
+    .about-image-wrap {
         justify-content: center;
+        width: 100%;
+    }
+
+    .about-package-img {
+        width: 100%;
+        max-width: 420px;
     }
 
     .contact-row {
         flex-direction: column;
         align-items: center;
         gap: 45px;
+        margin-top: 40px;
     }
 }
 </style>
@@ -815,7 +895,7 @@ elif menu == "About Us / 关于我们":
         instagram_base64,
         "instagram.jpg",
         "Instagram",
-        "Little Otter Crystal",
+        "社交平台",
         "#"
     )
 
@@ -823,23 +903,40 @@ elif menu == "About Us / 关于我们":
         email_base64,
         "email.jpg",
         "Email",
-        "littleotter@gmail.com",
-        "#"
+        "邮箱",
+        "mailto:your-email@example.com"
     )
 
     wechat_html = contact_icon_html(
         wechat_base64,
         "wechat.jpg",
         "WeChat",
-        "Little Otter Crystal",
+        "微信",
         "#"
+    )
+
+    about_text_html = (
+        '<div class="about-text">'
+        '<div class="about-text-title">little otter story</div>'
+        '<p>Little Otter is a handcrafted crystal studio inspired by the gentle habit of otters treasuring their favorite stones. We believe every crystal carries its own texture, memory, and quiet energy.</p>'
+        '<p>Each bracelet is created with natural stones, soft color harmony, and a sense of everyday calm. Rather than chasing excessive polish, we value authenticity and the small imperfections that make every piece unique.</p>'
+        '<p>Little Otter 是一个天然水晶手作品牌，灵感来自小水獭珍藏石头的温柔习惯。我们相信，每一颗水晶都有属于自己的纹理、记忆与安静能量。</p>'
+        '<p>每一件作品都以天然石、柔和配色与日常陪伴感为核心。我们不追求过度打磨后的完美，而更珍视自然石本身的真实与独特。</p>'
+        '<div class="about-note">'
+        'For custom designs, product details, packaging, or collaboration inquiries, please contact us through Instagram, Email, or WeChat.<br>'
+        '如需定制设计、产品咨询、包装信息或合作沟通，欢迎通过 Instagram、邮箱或微信联系我们。'
+        '</div>'
+        '</div>'
     )
 
     about_html = (
         '<div class="about-container">'
         '<h2 class="about-title">about us / 关于我们</h2>'
-        '<div class="about-top">'
+        '<div class="about-hero">'
+        f'{about_text_html}'
+        '<div class="about-image-wrap">'
         f'{package_html}'
+        '</div>'
         '</div>'
         '<div class="contact-row">'
         f'{instagram_html}'
