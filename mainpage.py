@@ -4,6 +4,59 @@ from collections import Counter
 # --- 1. 深度页面配置与视觉注入 ---
 st.set_page_config(page_title="little otter | 灵石手作", page_icon="🦦", layout="wide")
 
+# --- 隐藏 Streamlit 顶部菜单 / GitHub / Deploy / Viewer Badge ---
+st.markdown(
+    """
+    <style>
+    /* 旧版 Streamlit Cloud viewer badge / GitHub badge */
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* 新版 Streamlit 顶部工具栏、Deploy/GitHub 按钮、状态控件 */
+    #MainMenu {
+        visibility: hidden !important;
+        display: none !important;
+    }
+
+    header {
+        visibility: hidden !important;
+        height: 0rem !important;
+    }
+
+    footer {
+        visibility: hidden !important;
+        display: none !important;
+    }
+
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"],
+    [data-testid="manage-app-button"],
+    [data-testid="stHeaderActionElements"],
+    .stDeployButton,
+    .stActionButton,
+    a[href*="github.com"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* 去掉隐藏 header 后可能留下的顶部空白 */
+    .block-container {
+        padding-top: 2rem !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # 强制注入 Wix 风格的高级感 CSS
 st.markdown("""
     <style>
@@ -144,15 +197,14 @@ menu = st.sidebar.radio("Navigation", ["Home", "Collections", "DIY Studio", "Ene
 
 # 1. Home - 品牌首页
 if menu == "Home":
+    st.markdown("<div style='text-align:center; padding:40px 0 10px 0;'>", unsafe_allow_html=True)
+    st.image("首页logo图.jpg", width=520)
     st.markdown("""
-        <div style="height:500px; background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
-                    url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=1600') center/cover;
-                    display:flex; flex-direction:column; justify-content:center; align-items:center; color:white;">
-            <h1 style="color:white !important; font-size:4.5rem; margin-bottom:0px;">little otter</h1>
-            <p style="letter-spacing:6px; text-transform:uppercase; font-size:12px; margin-top:10px;">源于自然的治愈 · 灵石手作</p>
+        <div style="text-align:center; padding: 10px 0 30px 0;">
+            <p style="letter-spacing:6px; text-transform:uppercase; font-size:12px; color:#7D7A75; margin-top:0;">源于自然的治愈 · 灵石手作</p>
         </div>
     """, unsafe_allow_html=True)
-    
+
     st.markdown("<br><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
@@ -161,24 +213,25 @@ if menu == "Home":
             正如小水獭总会挑选最心仪的那块石头揣在兜里，**little otter** 诞生的初衷，是为你寻找那颗能引起灵魂共鸣的矿石。
             我们不追求过度的雕琢，只在意自然的触感与能量的传递。每一串手作，都是一份可以触碰的平静。
         """)
-        st.image("https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1600&auto=format&fit=crop")
+        st.image("关于我们-产品包装图-1.jpg", use_container_width=True)
 
 # 2. Collections - 系列展示
 elif menu == "Collections":
     st.markdown("<h2 style='text-align:center; padding:50px 0;'>the collection</h2>", unsafe_allow_html=True)
-    
+
     products = [
-        {"name": "river flow - 海蓝宝", "price": "¥ 399.00", "img": "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?auto=format&fit=crop&q=80&w=600"},
-        {"name": "sunset glow - 草莓晶", "price": "¥ 458.00", "img": "https://images.unsplash.com/photo-1588444833098-4205565e247d?auto=format&fit=crop&q=80&w=600"},
-        {"name": "deep forest - 绿幽灵", "price": "¥ 520.00", "img": "https://images.unsplash.com/photo-1611085583191-a3b1a308c021?auto=format&fit=crop&q=80&w=600"}
+        {"name": "river flow - 海蓝宝", "price": "¥ 399.00", "img": "首页-产品展示图-1.jpg"},
+        {"name": "sunset glow - 草莓晶", "price": "¥ 458.00", "img": "首页-产品展示图-2.jpg"},
+        {"name": "deep forest - 绿幽灵", "price": "¥ 520.00", "img": "首页-产品展示图-3.jpg"},
+        {"name": "soft light - 月光石", "price": "¥ 468.00", "img": "首页-产品展示图-4.jpg"},
     ]
-    
-    cols = st.columns(3)
+
+    cols = st.columns(4)
     for i, p in enumerate(products):
         with cols[i]:
+            st.image(p["img"], use_container_width=True)
             st.markdown(f"""
                 <div class="product-box">
-                    <img src="{p['img']}" style="width:100%; height:350px; object-fit:cover; margin-bottom:15px;">
                     <h3 style="font-size:1.1rem;">{p['name']}</h3>
                     <p style="color:#A68B67; font-weight:500;">{p['price']}</p>
                 </div>
