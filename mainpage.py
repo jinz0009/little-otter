@@ -1175,7 +1175,7 @@ elif current_page == "about":
         instagram_src,
         "instagram.jpg",
         "Instagram",
-        "Little Otter Crystal / 小水獭水晶",
+        "Little Otter Crystal",
         "#"
     )
 
@@ -1183,7 +1183,7 @@ elif current_page == "about":
         email_src,
         "email.jpg",
         "Email",
-        "littleotter@gmail.com / 邮箱",
+        "littleotter@gmail.com",
         "mailto:littleotter@gmail.com"
     )
 
@@ -1191,7 +1191,7 @@ elif current_page == "about":
         wechat_src,
         "wechat.jpg",
         "WeChat",
-        "Little Otter Crystal / 小水獭水晶",
+        "Little Otter Crystal",
         "#"
     )
 
