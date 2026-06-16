@@ -30,48 +30,48 @@ def get_query_param_value(name):
 # --- 隐藏 Streamlit 顶部菜单 / GitHub / Deploy / Viewer Badge ---
 st.markdown(
     """
-    <style>
-    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
-    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
-    .viewerBadge_text__1JaDK {
-        display: none !important;
-        visibility: hidden !important;
-    }
+<style>
+.css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+.styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+.viewerBadge_text__1JaDK {
+    display: none !important;
+    visibility: hidden !important;
+}
 
-    #MainMenu {
-        visibility: hidden !important;
-        display: none !important;
-    }
+#MainMenu {
+    visibility: hidden !important;
+    display: none !important;
+}
 
-    header {
-        visibility: hidden !important;
-        height: 0rem !important;
-    }
+header {
+    visibility: hidden !important;
+    height: 0rem !important;
+}
 
-    footer {
-        visibility: hidden !important;
-        display: none !important;
-    }
+footer {
+    visibility: hidden !important;
+    display: none !important;
+}
 
-    [data-testid="stToolbar"],
-    [data-testid="stDecoration"],
-    [data-testid="stStatusWidget"],
-    [data-testid="manage-app-button"],
-    [data-testid="stHeaderActionElements"],
-    .stDeployButton,
-    .stActionButton,
-    a[href*="github.com"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        pointer-events: none !important;
-    }
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="manage-app-button"],
+[data-testid="stHeaderActionElements"],
+.stDeployButton,
+.stActionButton,
+a[href*="github.com"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+}
 
-    .block-container {
-        padding-top: 2rem !important;
-    }
-    </style>
+.block-container {
+    padding-top: 2rem !important;
+}
+</style>
     """,
     unsafe_allow_html=True
 )
@@ -79,102 +79,102 @@ st.markdown(
 
 # --- 全局视觉 CSS ---
 st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap');
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap');
 
-    .stApp {
-        background-color: #FDFCFB !important;
-        color: #333;
-    }
-    
-    html, body, [data-testid="stWidgetLabel"], .stMarkdown p {
-        font-family: 'Montserrat', sans-serif !important;
-        font-weight: 300;
-    }
+.stApp {
+    background-color: #FDFCFB !important;
+    color: #333;
+}
 
-    h1, h2, h3 {
-        font-family: 'Playfair Display', serif !important;
-        font-weight: 400 !important;
-        letter-spacing: 3px !important;
-        text-transform: lowercase;
-    }
+html, body, [data-testid="stWidgetLabel"], .stMarkdown p {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 300;
+}
 
-    div.stButton > button {
-        border-radius: 0px !important;
-        border: 1px solid #333 !important;
-        background-color: transparent !important;
-        color: #333 !important;
-        padding: 10px 25px !important;
-        text-transform: uppercase;
-        font-size: 11px !important;
-        letter-spacing: 2px;
-        transition: 0.3s;
-        width: 100%;
-    }
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 3px !important;
+    text-transform: lowercase;
+}
 
-    div.stButton > button:hover {
-        background-color: #333 !important;
-        color: white !important;
-    }
-    
-    [data-testid="stSidebar"] {
-        background-color: #F8F7F5 !important;
-        border-right: 1px solid #EEE;
-    }
+div.stButton > button {
+    border-radius: 0px !important;
+    border: 1px solid #333 !important;
+    background-color: transparent !important;
+    color: #333 !important;
+    padding: 10px 25px !important;
+    text-transform: uppercase;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    transition: 0.3s;
+    width: 100%;
+}
 
-    .diy-bracelet-container {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        gap: 3px;
-        padding: 80px 20px;
-        background-color: #F4F2EE;
-        border-top: 1px solid #EAEAEA;
-        border-bottom: 1px solid #EAEAEA;
-        margin: 30px 0;
-        position: relative;
-        overflow-x: auto;
-    }
+div.stButton > button:hover {
+    background-color: #333 !important;
+    color: white !important;
+}
 
-    .diy-bracelet-container::after {
-        content: '';
-        position: absolute;
-        width: 85%;
-        height: 1px;
-        background-color: #D1D1D1;
-        z-index: 0;
-    }
+[data-testid="stSidebar"] {
+    background-color: #F8F7F5 !important;
+    border-right: 1px solid #EEE;
+}
 
-    .bead-circle {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        z-index: 1;
-        box-shadow: inset -4px -4px 12px rgba(0,0,0,0.2), 2px 4px 6px rgba(0,0,0,0.1);
-        transition: 0.3s;
-    }
+.diy-bracelet-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    padding: 80px 20px;
+    background-color: #F4F2EE;
+    border-top: 1px solid #EAEAEA;
+    border-bottom: 1px solid #EAEAEA;
+    margin: 30px 0;
+    position: relative;
+    overflow-x: auto;
+}
 
-    .bead-spacer {
-        width: 12px;
-        height: 38px;
-        border-radius: 3px;
-        z-index: 1;
-        box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-    }
-    
-    .product-box {
-        text-align: center;
-        padding: 15px;
-        border: 1px solid transparent;
-        transition: 0.4s;
-    }
+.diy-bracelet-container::after {
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 1px;
+    background-color: #D1D1D1;
+    z-index: 0;
+}
 
-    .product-box:hover {
-        border: 1px solid #A68B67;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+.bead-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: inset -4px -4px 12px rgba(0,0,0,0.2), 2px 4px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.bead-spacer {
+    width: 12px;
+    height: 38px;
+    border-radius: 3px;
+    z-index: 1;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+.product-box {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid transparent;
+    transition: 0.4s;
+}
+
+.product-box:hover {
+    border: 1px solid #A68B67;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 # --- 2. 状态与数据初始化 ---
@@ -214,11 +214,14 @@ if menu == "Home":
     logo_base64 = image_to_base64("首页logo图.jpg")
 
     if logo_base64:
-        st.markdown(f"""
-            <div style="width:100%; display:flex; justify-content:center; align-items:center; padding:40px 0 20px 0;">
-                <img src="data:image/jpeg;base64,{logo_base64}" style="width:520px; max-width:90%; display:block;">
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f"""
+<div style="width:100%; display:flex; justify-content:center; align-items:center; padding:40px 0 20px 0;">
+    <img src="data:image/jpeg;base64,{logo_base64}" style="width:520px; max-width:90%; display:block;">
+</div>
+            """,
+            unsafe_allow_html=True
+        )
     else:
         st.warning("未找到首页logo图.jpg，请确认图片和代码文件在同一个文件夹。")
 
@@ -335,25 +338,28 @@ elif menu == "Collections":
 """, unsafe_allow_html=True)
 
     products = [
-        {"id": 1, "price": "299"},
-        {"id": 2, "price": "99"},
-        {"id": 3, "price": "128"},
-        {"id": 4, "price": "269"},
-        {"id": 5, "price": "269"},
-        {"id": 6, "price": "269"},
-        {"id": 7, "price": "349"},
-        {"id": 8, "price": "128"},
-        {"id": 9, "price": "168"},
-        {"id": 10, "price": "168"},
-        {"id": 11, "price": "168"},
-        {"id": 12, "price": "168"},
+        {"id": 1, "price": "299", "has_detail": True},
+        {"id": 2, "price": "99", "has_detail": True},
+        {"id": 3, "price": "128", "has_detail": True},
+        {"id": 4, "price": "269", "has_detail": True},
+        {"id": 5, "price": "269", "has_detail": True},
+        {"id": 6, "price": "269", "has_detail": True},
+        {"id": 7, "price": "349", "has_detail": True},
+        {"id": 8, "price": "128", "has_detail": True},
+        {"id": 9, "price": "168", "has_detail": True},
+        {"id": 10, "price": "168", "has_detail": True},
+        {"id": 11, "price": "168", "has_detail": True},
+        {"id": 12, "price": "168", "has_detail": True},
+        {"id": 13, "price": "78", "has_detail": False},
+        {"id": 14, "price": "399", "has_detail": False},
     ]
 
     selected_item = get_query_param_value("collection_item")
+    valid_detail_ids = [str(p["id"]) for p in products if p["has_detail"]]
 
-    # 详情页
-    if selected_item and selected_item != "list":
-        selected_id = int(selected_item) if str(selected_item).isdigit() else 1
+    # 详情页：只有 1-12 可以进入
+    if selected_item and selected_item != "list" and selected_item in valid_detail_ids:
+        selected_id = int(selected_item)
 
         st.markdown(
             '<a class="back-link" href="?collection_item=list" target="_self">← BACK TO COLLECTION</a>',
@@ -399,27 +405,46 @@ elif menu == "Collections":
                     cover_name = f"{product['id']}.jpg"
                     cover_base64 = image_to_base64(cover_name)
 
-                    if cover_base64:
-                        cover_html = (
-                            f'<a href="?collection_item={product["id"]}" target="_self">'
-                            f'<img src="data:image/jpeg;base64,{cover_base64}" alt="collection {product["id"]}">'
-                            f'</a>'
-                        )
-                    else:
-                        cover_html = (
-                            f'<a href="?collection_item={product["id"]}" target="_self">'
-                            f'<div style="height:350px; display:flex; align-items:center; justify-content:center; '
-                            f'border:1px solid #333; color:#999; background:#111;">未找到 {cover_name}</div>'
-                            f'</a>'
+                    if product["has_detail"]:
+                        if cover_base64:
+                            cover_html = (
+                                f'<a href="?collection_item={product["id"]}" target="_self">'
+                                f'<img src="data:image/jpeg;base64,{cover_base64}" alt="collection {product["id"]}">'
+                                f'</a>'
+                            )
+                        else:
+                            cover_html = (
+                                f'<a href="?collection_item={product["id"]}" target="_self">'
+                                f'<div style="height:350px; display:flex; align-items:center; justify-content:center; '
+                                f'border:1px solid #333; color:#999; background:#111;">未找到 {cover_name}</div>'
+                                f'</a>'
+                            )
+
+                        card_html = (
+                            '<div class="collection-card">'
+                            f'{cover_html}'
+                            f'<div class="collection-price">S$: &nbsp;{product["price"]}</div>'
+                            f'<a class="collection-button" href="?collection_item={product["id"]}" target="_self">EXPLORE MORE</a>'
+                            '</div>'
                         )
 
-                    card_html = (
-                        '<div class="collection-card">'
-                        f'{cover_html}'
-                        f'<div class="collection-price">S$: &nbsp;{product["price"]}</div>'
-                        f'<a class="collection-button" href="?collection_item={product["id"]}" target="_self">EXPLORE MORE</a>'
-                        '</div>'
-                    )
+                    else:
+                        if cover_base64:
+                            cover_html = (
+                                f'<img src="data:image/jpeg;base64,{cover_base64}" alt="collection {product["id"]}">'
+                            )
+                        else:
+                            cover_html = (
+                                f'<div style="height:350px; display:flex; align-items:center; justify-content:center; '
+                                f'border:1px solid #333; color:#999; background:#111;">未找到 {cover_name}</div>'
+                            )
+
+                        card_html = (
+                            '<div class="collection-card">'
+                            f'{cover_html}'
+                            f'<div class="collection-price">S$: &nbsp;{product["price"]}</div>'
+                            '</div>'
+                        )
 
                     st.markdown(card_html, unsafe_allow_html=True)
 
@@ -481,7 +506,7 @@ elif menu == "DIY Studio":
         total = sum(BEAD_DB[b]["price"] for b in st.session_state.diy_beads)
 
         st.markdown("#### Estimate")
-        st.markdown(f"<h2 style='color:#A68B67;'>¥ {total}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='color:#A68B67;'>S$ {total}</h2>", unsafe_allow_html=True)
 
         if st.button("❤️ Save Design"):
             st.success("Design saved to your wish list.")
