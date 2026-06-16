@@ -105,6 +105,21 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+
+# 屏蔽 Streamlit 页面右上角 GitHub / viewer badge 图标
+st.markdown( 
+    """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # --- 2. 状态与数据初始化 ---
 if 'diy_beads' not in st.session_state:
     st.session_state.diy_beads = []
