@@ -518,48 +518,107 @@ elif menu == "Energy Quiz":
     st.markdown("<h2 style='text-align:center; padding:40px 0;'>crystal oracle</h2>", unsafe_allow_html=True)
     
     st.markdown("""
-        <div style='max-width:700px; margin:0 auto; padding:40px; border:1px solid #EEE; background:white; margin-bottom:50px;'>
-            <h3 style='text-align:center; margin-top:0;'>寻找你的本命水晶</h3>
-            <p style='text-align:center; color:#888; font-size:13px;'>回答 3 个直觉问题，我们将为你匹配最适合的水晶能量。</p>
+        <div style='max-width:760px; margin:0 auto; padding:40px; border:1px solid #EEE; background:white; margin-bottom:50px;'>
+            <h3 style='text-align:center; margin-top:0;'>Find Your Crystal Energy</h3>
+            <p style='text-align:center; color:#888; font-size:13px;'>
+                Answer 3 questions and receive your Little Otter crystal energy report.
+            </p>
             <br>
     """, unsafe_allow_html=True)
     
+    # Question 1
     q1 = st.select_slider(
-        "1. 你最近的状态更倾向于？", 
-        options=["极度焦虑", "平淡如水", "充满斗志"]
+        "Question 1 of 3 — How would you describe your current state?",
+        options=[
+            "I want to express myself more confidently",
+            "I want to stay focused and reduce distractions",
+            "I want to attract love and positive relationships",
+            "I want to welcome more opportunities and success"
+        ]
     )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.write("2. 如果你现在深处森林，你最希望看到的颜色是？")
-    q2 = st.color_picker("点击色块选择你的直觉色", "#7e6c6c", key="quiz_color")
+    # Question 2
+    st.write("Question 2 of 3 — Which color are you most drawn to right now?")
+    q2 = st.color_picker(
+        "Choose your instinctive color",
+        "#7e6c6c",
+        key="quiz_color"
+    )
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    q3 = st.multiselect(
-        "3. 你希望提升哪方面的能量？", 
-        ["沟通力", "专注力", "桃花运", "财运"],
-        placeholder="请选择 (可多选)"
+    # Question 3
+    q3 = st.radio(
+        "Question 3 of 3 — Which energy do you want to enhance the most?",
+        [
+            "Communication Enhancement",
+            "Focus Enhancement",
+            "Love & Relationship Energy",
+            "Prosperity & Abundance"
+        ]
     )
     
     st.markdown("<br><br>", unsafe_allow_html=True)
     
-    if st.button("生成我的匹配报告"):
+    reports = {
+        "Communication Enhancement": {
+            "title": "1. Communication Enhancement | Express Yourself with Confidence and Build Meaningful Connections",
+            "keywords": "Clear expression, Increased confidence, Interpersonal harmony, Enhanced persuasion and influence",
+            "crystals": "Aquamarine, Blue Lace Agate, Lapis Lazuli",
+            "product": "Aquamarine Communication Energy Bracelet"
+        },
+        "Focus Enhancement": {
+            "title": "2. Focus Enhancement | Cultivate Concentration and Strengthen Execution",
+            "keywords": "Improved concentration, Reduced distractions, Enhanced motivation, Clear thinking",
+            "crystals": "Fluorite, Amethyst, Obsidian",
+            "product": "Fluorite Focus Energy Bracelet"
+        },
+        "Love & Relationship Energy": {
+            "title": "3. Love & Relationship Energy | Radiate Charm and Attract Positive Connections",
+            "keywords": "Self-love and appreciation, Emotional connection, Increased approachability, Personal magnetism",
+            "crystals": "Rose Quartz, Strawberry Quartz, Moonstone",
+            "product": "Rose Quartz Love Energy Bracelet"
+        },
+        "Prosperity & Abundance": {
+            "title": "4. Prosperity & Abundance | Embrace Opportunities and Cultivate Success",
+            "keywords": "Prosperity mindset, Motivation and initiative, Career growth, Opportunity awareness",
+            "crystals": "Citrine, Golden Rutilated Quartz, Green Phantom Quartz",
+            "product": "Prosperity & Success Energy Bracelet"
+        }
+    }
+    
+    if st.button("Generate My Crystal Report"):
         st.balloons()
         st.markdown("---")
         st.markdown("### 🦦 little otter's guide")
         
-        if "财运" in q3:
-            st.write("### ✨ 建议选择：**金发晶 (Gold Rutilated Quartz)**")
-            st.write("在你选中的色彩与意向中，金发晶的频率最能引起共鸣。它能增强你的决断力与行动力，吸引财富磁场，让你的“斗志”化为丰硕的果实。")
+        result = reports[q3]
+        
+        st.markdown(f"""
+            <div style='background:#000; color:#fff; padding:35px; margin-top:25px; line-height:1.65;'>
+                <h3 style='color:#fff !important; text-transform:none !important; letter-spacing:1px !important;'>
+                    {result["title"]}
+                </h3>
 
-        elif "桃花运" in q3 or "沟通力" in q3:
-            st.write("### ✨ 建议选择：**粉晶 (Rose Quartz)**")
-            st.write("温柔的色彩能抚平内心的焦虑。粉晶不仅是吸引良缘，更能帮助你开启与自我、与他人的温和沟通视角。")
+                <p><strong>Energy Keywords:</strong> {result["keywords"]}</p>
+                <p><strong>Recommended Crystals:</strong> {result["crystals"]}</p>
+                <p><strong>Recommended Product:</strong> {result["product"]}</p>
 
-        else:
-            st.write("### ✨ 建议选择：**海蓝宝 (Aquamarine)**")
-            st.write("针对你追求的平衡状态，海蓝宝如同流动的水，能带走负累，让你在平淡如水的生活中发现深邃的智慧。")
+                <br>
+
+                <p>
+                    May each crystal become a source of inspiration and support on your journey.
+                </p>
+
+                <br>
+
+                <p>
+                    <strong>Disclaimer:</strong> This report is intended for inspirational and lifestyle purposes only and does not replace professional advice.
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
 
