@@ -202,7 +202,7 @@ default_menu_index = 1 if collection_item_from_url else 0
 
 menu = st.sidebar.radio(
     "Navigation",
-    ["Home", "Collections", "DIY Studio", "Energy Quiz"],
+    ["Home", "Collections", "DIY Studio", "Energy Quiz", "About Us"],
     index=default_menu_index
 )
 
@@ -357,7 +357,6 @@ elif menu == "Collections":
     selected_item = get_query_param_value("collection_item")
     valid_detail_ids = [str(p["id"]) for p in products if p["has_detail"]]
 
-    # 详情页：只有 1-12 可以进入
     if selected_item and selected_item != "list" and selected_item in valid_detail_ids:
         selected_id = int(selected_item)
 
@@ -390,7 +389,6 @@ elif menu == "Collections":
                 else:
                     st.warning(f"未找到详情图：{img_name}")
 
-    # 列表页
     else:
         st.markdown(
             "<h2 class='collection-title'>the collection</h2>",
@@ -526,7 +524,6 @@ elif menu == "Energy Quiz":
             <br>
     """, unsafe_allow_html=True)
     
-    # Question 1
     q1 = st.select_slider(
         "Question 1 of 3 — How would you describe your current state?",
         options=[
@@ -539,7 +536,6 @@ elif menu == "Energy Quiz":
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Question 2
     st.write("Question 2 of 3 — Which color are you most drawn to right now?")
     q2 = st.color_picker(
         "Choose your instinctive color",
@@ -549,7 +545,6 @@ elif menu == "Energy Quiz":
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Question 3
     q3 = st.radio(
         "Question 3 of 3 — Which energy do you want to enhance the most?",
         [
@@ -621,6 +616,147 @@ elif menu == "Energy Quiz":
         """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+
+# 5. About Us - 联系我们
+elif menu == "About Us":
+    st.markdown("""
+<style>
+[data-testid="stAppViewContainer"] {
+    background-color: #000000 !important;
+}
+
+.about-container {
+    min-height: 760px;
+    background: #000000;
+    padding: 40px 40px 100px 40px;
+}
+
+.about-top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-bottom: 120px;
+}
+
+.about-package-img {
+    width: 420px;
+    max-width: 90%;
+    height: auto;
+    object-fit: cover;
+}
+
+.contact-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 80px;
+    margin-top: 80px;
+}
+
+.contact-item {
+    text-align: center;
+}
+
+.contact-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.contact-label {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-top: 18px;
+    text-transform: none;
+}
+
+@media (max-width: 900px) {
+    .about-top {
+        justify-content: center;
+    }
+
+    .contact-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 45px;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
+    package_base64 = image_to_base64("关于我们-产品包装图-1.jpg")
+    instagram_base64 = image_to_base64("instagram.jpg")
+    email_base64 = image_to_base64("email.jpg")
+    wechat_base64 = image_to_base64("wechat.jpg")
+
+    if package_base64:
+        package_html = f'<img class="about-package-img" src="data:image/jpeg;base64,{package_base64}">'
+    else:
+        package_html = '''
+        <div style="width:420px; height:300px; border:1px solid #333; color:#999; display:flex; align-items:center; justify-content:center;">
+            未找到 关于我们-产品包装图-1.jpg
+        </div>
+        '''
+
+    def contact_icon_html(base64_data, file_name, label, link="#"):
+        if base64_data:
+            icon_html = f'''
+            <a href="{link}" target="_blank">
+                <img src="data:image/jpeg;base64,{base64_data}" alt="{label}">
+            </a>
+            '''
+        else:
+            icon_html = f'''
+            <div style="width:150px; height:150px; background:#111; border:1px solid #333; color:#999; display:flex; align-items:center; justify-content:center;">
+                未找到 {file_name}
+            </div>
+            '''
+
+        return f'''
+        <div class="contact-item">
+            {icon_html}
+            <div class="contact-label">{label}</div>
+        </div>
+        '''
+
+    instagram_html = contact_icon_html(
+        instagram_base64,
+        "instagram.jpg",
+        "Instagram",
+        "#"
+    )
+
+    email_html = contact_icon_html(
+        email_base64,
+        "email.jpg",
+        "Email",
+        "mailto:your-email@example.com"
+    )
+
+    wechat_html = contact_icon_html(
+        wechat_base64,
+        "wechat.jpg",
+        "WeChat",
+        "#"
+    )
+
+    st.markdown(f"""
+<div class="about-container">
+    <div class="about-top">
+        {package_html}
+    </div>
+
+    <div class="contact-row">
+        {instagram_html}
+        {email_html}
+        {wechat_html}
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # 页脚
