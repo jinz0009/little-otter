@@ -223,14 +223,54 @@ if "diy_beads" not in st.session_state:
     st.session_state.diy_beads = []
 
 BEAD_DB = {
-    "主珠-月光石 (温润)": {"color": "#eeeae8", "type": "main", "price": 25},
-    "主珠-海蓝宝 (沟通)": {"color": "#a2cffe", "type": "main", "price": 30},
-    "主珠-紫水晶 (智慧)": {"color": "#9b59b6", "type": "main", "price": 20},
-    "主珠-草莓晶 (人缘)": {"color": "#ffb7c5", "type": "main", "price": 28},
-    "主珠-黑曜石 (辟邪)": {"color": "#333333", "type": "main", "price": 15},
-    "配珠-白水晶 (净化)": {"color": "#ffffff", "type": "main", "price": 10},
-    "隔片-925银素圈": {"color": "linear-gradient(to right, #d7d7d7, #ffffff)", "type": "spacer", "price": 5},
-    "隔片-复古金珠": {"color": "linear-gradient(to right, #bf9b30, #e6c975)", "type": "spacer", "price": 8},
+    "moonstone": {
+        "display": "月光石 / Moonstone\n温润 / Warmth",
+        "color": "#eeeae8",
+        "type": "main",
+        "price": 25
+    },
+    "aquamarine": {
+        "display": "海蓝宝 / Aquamarine\n沟通 / Communication",
+        "color": "#a2cffe",
+        "type": "main",
+        "price": 30
+    },
+    "amethyst": {
+        "display": "紫水晶 / Amethyst\n智慧 / Wisdom",
+        "color": "#9b59b6",
+        "type": "main",
+        "price": 20
+    },
+    "strawberry_quartz": {
+        "display": "草莓晶 / Strawberry Quartz\n人缘 / Relationship",
+        "color": "#ffb7c5",
+        "type": "main",
+        "price": 28
+    },
+    "obsidian": {
+        "display": "黑曜石 / Obsidian\n辟邪 / Protection",
+        "color": "#333333",
+        "type": "main",
+        "price": 15
+    },
+    "clear_quartz": {
+        "display": "白水晶 / Clear Quartz\n净化 / Cleansing",
+        "color": "#ffffff",
+        "type": "main",
+        "price": 10
+    },
+    "silver_spacer": {
+        "display": "925银素圈 / 925 Silver Spacer",
+        "color": "linear-gradient(to right, #d7d7d7, #ffffff)",
+        "type": "spacer",
+        "price": 5
+    },
+    "gold_spacer": {
+        "display": "复古金珠 / Vintage Gold Spacer",
+        "color": "linear-gradient(to right, #bf9b30, #e6c975)",
+        "type": "spacer",
+        "price": 8
+    },
 }
 
 
@@ -527,7 +567,7 @@ elif menu == "DIY Studio / 手作工坊":
         for bead_name in st.session_state.diy_beads:
             bead_info = BEAD_DB[bead_name]
             css_class = "bead-spacer" if bead_info["type"] == "spacer" else "bead-circle"
-            html_beads += f'<div class="{css_class}" style="background: {bead_info["color"]};" title="{bead_name}"></div>'
+            html_beads += f'<div class="{css_class}" style="background: {bead_info["color"]};" title="{bead_info["display"]}"></div>'
 
     st.markdown(f'<div class="diy-bracelet-container">{html_beads}</div>', unsafe_allow_html=True)
 
@@ -536,23 +576,33 @@ elif menu == "DIY Studio / 手作工坊":
     with c1:
         tab1, tab2 = st.tabs(["🔮 Main Stones / 主珠", "✨ Spacers / 隔片"])
 
-        main_beads = [n for n, i in BEAD_DB.items() if i["type"] == "main"]
-        spacer_beads = [n for n, i in BEAD_DB.items() if i["type"] == "spacer"]
+        main_beads = [key for key, item in BEAD_DB.items() if item["type"] == "main"]
+        spacer_beads = [key for key, item in BEAD_DB.items() if item["type"] == "spacer"]
 
         with tab1:
             btn_cols = st.columns(3)
 
-            for i, name in enumerate(main_beads):
-                if btn_cols[i % 3].button(f"＋ {name.split('-')[1]}", key=f"add_{name}"):
-                    st.session_state.diy_beads.append(name)
+            for i, bead_key in enumerate(main_beads):
+                bead_display = BEAD_DB[bead_key]["display"]
+
+                if btn_cols[i % 3].button(
+                    f"＋ {bead_display}",
+                    key=f"add_{bead_key}"
+                ):
+                    st.session_state.diy_beads.append(bead_key)
                     st.rerun()
 
         with tab2:
             btn_cols_s = st.columns(2)
 
-            for i, name in enumerate(spacer_beads):
-                if btn_cols_s[i % 2].button(f"＋ {name.split('-')[1]}", key=f"add_{name}"):
-                    st.session_state.diy_beads.append(name)
+            for i, bead_key in enumerate(spacer_beads):
+                bead_display = BEAD_DB[bead_key]["display"]
+
+                if btn_cols_s[i % 2].button(
+                    f"＋ {bead_display}",
+                    key=f"add_{bead_key}"
+                ):
+                    st.session_state.diy_beads.append(bead_key)
                     st.rerun()
 
     with c2:
@@ -571,7 +621,7 @@ elif menu == "DIY Studio / 手作工坊":
         total = sum(BEAD_DB[b]["price"] for b in st.session_state.diy_beads)
 
         st.markdown("#### Estimate / 预估价格")
-        st.markdown(f"<h2 style='color:#A68B67;'>S$ {total}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='color:#A68B67;'>SGD {total}</h2>", unsafe_allow_html=True)
 
         if st.button("❤️ Save Design / 保存设计"):
             st.success("Design saved to your wish list. / 已保存到你的心愿单。")
@@ -742,15 +792,6 @@ elif menu == "About Us / 关于我们":
     color: #222222;
 }
 
-.packaging-content h2 {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 700 !important;
-    letter-spacing: 0px !important;
-    text-transform: none !important;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
 .packaging-content ul {
     margin: 0;
     padding-left: 22px;
@@ -833,11 +874,6 @@ elif menu == "About Us / 关于我们":
         text-align: left;
         max-width: 520px;
         margin: 0 auto;
-    }
-
-    .packaging-content h2 {
-        text-align: center;
-        font-size: 24px;
     }
 
     .packaging-content li {
@@ -937,7 +973,6 @@ elif menu == "About Us / 关于我们":
         'Crystal Packaging<br>水晶包装'
         '</div>'
         '<div class="packaging-content">'
-        '<h2>Complimentary Gift Set<br>赠品套装</h2>'
         '<ul>'
         '<li>Premium Crystal Gift Box <span class="packaging-cn">高级水晶礼盒</span></li>'
         '<li>Crystal Polishing Cloth <span class="packaging-cn">水晶擦拭布</span></li>'
