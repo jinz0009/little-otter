@@ -60,7 +60,7 @@ def safe_rerun():
         st.experimental_rerun()
 
 
-# --- 3. 隐藏 Streamlit 原生顶部 / GitHub / Deploy ---
+# --- 3. 隐藏 Streamlit 原生顶部 / GitHub / Deploy / Hosted Badge ---
 st.markdown(
 """
 <style>
@@ -81,7 +81,18 @@ header,
 .styles_viewerBadge__1yB5_,
 .viewerBadge_link__1S137,
 .viewerBadge_text__1JaDK,
+div[class*="viewerBadge"],
+div[class*="ViewerBadge"],
+section[class*="viewerBadge"],
+section[class*="ViewerBadge"],
+a[class*="viewerBadge"],
+a[class*="ViewerBadge"],
+div[class*="hosted"],
+div[class*="Hosted"],
 a[href*="github.com"],
+a[href*="streamlit.io"],
+a[href*="share.streamlit.io"],
+a[href*="streamlit.app"],
 button[title*="GitHub"],
 button[aria-label*="GitHub"],
 a[title*="GitHub"],
@@ -90,20 +101,20 @@ a[aria-label*="GitHub"] {
     visibility: hidden !important;
     opacity: 0 !important;
     height: 0 !important;
+    max-height: 0 !important;
+    min-height: 0 !important;
     pointer-events: none !important;
+    overflow: hidden !important;
 }
 
 .block-container {
     padding-top: 1rem !important;
-    padding-left: 4rem !important;
-    padding-right: 4rem !important;
+    padding-bottom: 1rem !important;
 }
 
 @media (max-width: 768px) {
     .block-container {
-        padding-top: 0.8rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        padding-bottom: 1rem !important;
     }
 }
 </style>
@@ -111,6 +122,33 @@ a[aria-label*="GitHub"] {
     unsafe_allow_html=True
 )
 
+# --- 3.1 手机端底部 Streamlit Badge 遮罩兜底 ---
+st.markdown(
+"""
+<div class="bottom-badge-cover"></div>
+
+<style>
+.bottom-badge-cover {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 78px;
+    background: #FDFCFB;
+    z-index: 2147483647;
+    pointer-events: none;
+}
+
+@media (min-width: 769px) {
+    .bottom-badge-cover {
+        height: 0px;
+        display: none;
+    }
+}
+</style>
+""",
+    unsafe_allow_html=True
+)
 
 # --- 4. 全局统一风格 CSS ---
 st.markdown(
