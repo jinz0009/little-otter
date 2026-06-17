@@ -486,29 +486,6 @@ div.stButton > button p {
     margin-top: 8px;
 }
 
-/* Quiz */
-.quiz-intro {
-    max-width: 760px;
-    margin: 0 auto 46px auto;
-    padding: 40px;
-    border: 1px solid var(--line);
-    background: white;
-    text-align: center;
-}
-
-.quiz-intro h3 {
-    margin-top: 0;
-}
-
-.quiz-report {
-    background: #FFFFFF;
-    color: var(--text);
-    padding: 35px;
-    margin-top: 25px;
-    line-height: 1.75;
-    border: 1px solid var(--line);
-}
-
 /* About */
 .about-container {
     min-height: 720px;
@@ -714,7 +691,6 @@ NAV_ITEMS = [
     {"key": "home", "label": "Home / 首页"},
     {"key": "collections", "label": "Collections / 系列"},
     {"key": "diy", "label": "DIY Studio / 手作工坊"},
-    {"key": "quiz", "label": "Energy Quiz / 能量测试"},
     {"key": "about", "label": "About Us / 关于我们"},
 ]
 
@@ -1052,131 +1028,7 @@ elif current_page == "diy":
             st.balloons()
 
 
-# --- 10. Energy Quiz / 能量测试 ---
-elif current_page == "quiz":
-    st.markdown('<div class="section-title">crystal oracle / 水晶能量测试</div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-subtitle">Answer three questions and receive your Little Otter crystal energy report / 回答三个问题，获得你的水晶能量报告</div>', unsafe_allow_html=True)
-
-    st.markdown(
-        """
-<div class="quiz-intro">
-<h3>Find Your Crystal Energy / 寻找你的水晶能量</h3>
-<p style="color:#888; font-size:13px;">
-Answer 3 questions and receive your Little Otter crystal energy report.<br>
-回答 3 个问题，获得你的 Little Otter 水晶能量报告。
-</p>
-</div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    q1 = st.select_slider(
-        "Question 1 of 3 / 第 1 题：How would you describe your current state? / 你如何描述最近的状态？",
-        options=[
-            "I want to express myself more confidently / 我想更自信地表达自己",
-            "I want to stay focused and reduce distractions / 我想提升专注力并减少分心",
-            "I want to attract love and positive relationships / 我想吸引爱与积极关系",
-            "I want to welcome more opportunities and success / 我想迎接更多机会与成功"
-        ]
-    )
-
-    st.write("")
-
-    st.write("Question 2 of 3 / 第 2 题：Which color are you most drawn to right now? / 你此刻最被哪种颜色吸引？")
-
-    q2 = st.color_picker(
-        "Choose your instinctive color / 选择你的直觉颜色",
-        "#7e6c6c",
-        key="quiz_color"
-    )
-
-    st.write("")
-
-    q3 = st.radio(
-        "Question 3 of 3 / 第 3 题：Which energy do you want to enhance the most? / 你最想增强哪一种能量？",
-        [
-            "Communication Enhancement / 沟通表达能量",
-            "Focus Enhancement / 专注执行能量",
-            "Love & Relationship Energy / 爱与关系能量",
-            "Prosperity & Abundance / 财富与丰盛能量"
-        ]
-    )
-
-    reports = {
-        "Communication Enhancement / 沟通表达能量": {
-            "title": "1. Communication Enhancement | Express Yourself with Confidence and Build Meaningful Connections",
-            "title_cn": "1. 沟通表达能量｜自信表达，建立有意义的人际连接",
-            "keywords": "Clear expression, Increased confidence, Interpersonal harmony, Enhanced persuasion and influence",
-            "keywords_cn": "清晰表达、自信提升、人际和谐、增强说服力与影响力",
-            "crystals": "Aquamarine, Blue Lace Agate, Lapis Lazuli",
-            "crystals_cn": "海蓝宝、蓝纹玛瑙、青金石",
-            "product": "Aquamarine Communication Energy Bracelet",
-            "product_cn": "海蓝宝沟通能量手串"
-        },
-        "Focus Enhancement / 专注执行能量": {
-            "title": "2. Focus Enhancement | Cultivate Concentration and Strengthen Execution",
-            "title_cn": "2. 专注执行能量｜培养专注力，增强行动与执行",
-            "keywords": "Improved concentration, Reduced distractions, Enhanced motivation, Clear thinking",
-            "keywords_cn": "提升专注力、减少分心、增强动力、思路清晰",
-            "crystals": "Fluorite, Amethyst, Obsidian",
-            "crystals_cn": "萤石、紫水晶、黑曜石",
-            "product": "Fluorite Focus Energy Bracelet",
-            "product_cn": "萤石专注能量手串"
-        },
-        "Love & Relationship Energy / 爱与关系能量": {
-            "title": "3. Love & Relationship Energy | Radiate Charm and Attract Positive Connections",
-            "title_cn": "3. 爱与关系能量｜散发魅力，吸引积极连接",
-            "keywords": "Self-love and appreciation, Emotional connection, Increased approachability, Personal magnetism",
-            "keywords_cn": "自爱与欣赏、情感连接、提升亲和力、个人吸引力",
-            "crystals": "Rose Quartz, Strawberry Quartz, Moonstone",
-            "crystals_cn": "粉晶、草莓晶、月光石",
-            "product": "Rose Quartz Love Energy Bracelet",
-            "product_cn": "粉晶爱与关系能量手串"
-        },
-        "Prosperity & Abundance / 财富与丰盛能量": {
-            "title": "4. Prosperity & Abundance | Embrace Opportunities and Cultivate Success",
-            "title_cn": "4. 财富与丰盛能量｜拥抱机会，培育成功",
-            "keywords": "Prosperity mindset, Motivation and initiative, Career growth, Opportunity awareness",
-            "keywords_cn": "丰盛心态、动力与主动性、事业成长、机会意识",
-            "crystals": "Citrine, Golden Rutilated Quartz, Green Phantom Quartz",
-            "crystals_cn": "黄水晶、金发晶、绿幽灵",
-            "product": "Prosperity & Success Energy Bracelet",
-            "product_cn": "财富与成功能量手串"
-        }
-    }
-
-    st.write("")
-    st.write("")
-
-    if st.button("Generate My Crystal Report / 生成我的水晶报告"):
-        st.balloons()
-
-        result = reports[q3]
-
-        report_html = (
-            '<div class="quiz-report">'
-            '<h3 style="text-transform:none !important; letter-spacing:1px !important;">🦦 little otter\'s guide / 小水獭能量指南</h3>'
-            f'<h3 style="text-transform:none !important; letter-spacing:1px !important;">{result["title"]}</h3>'
-            f'<h3 style="text-transform:none !important; letter-spacing:1px !important;">{result["title_cn"]}</h3>'
-            f'<p><strong>Energy Keywords:</strong> {result["keywords"]}</p>'
-            f'<p><strong>能量关键词：</strong>{result["keywords_cn"]}</p>'
-            f'<p><strong>Recommended Crystals:</strong> {result["crystals"]}</p>'
-            f'<p><strong>推荐水晶：</strong>{result["crystals_cn"]}</p>'
-            f'<p><strong>Recommended Product:</strong> {result["product"]}</p>'
-            f'<p><strong>推荐产品：</strong>{result["product_cn"]}</p>'
-            '<br>'
-            '<p>May each crystal become a source of inspiration and support on your journey.</p>'
-            '<p>愿每一颗水晶都成为你旅程中的灵感与支持。</p>'
-            '<br>'
-            '<p><strong>Disclaimer:</strong> This report is intended for inspirational and lifestyle purposes only and does not replace professional advice.</p>'
-            '<p><strong>免责声明：</strong>本报告仅用于灵感与生活方式参考，不替代任何专业建议。</p>'
-            '</div>'
-        )
-
-        st.markdown(report_html, unsafe_allow_html=True)
-
-
-# --- 11. About Us / 关于我们 ---
+# --- 10. About Us / 关于我们 ---
 elif current_page == "about":
     st.markdown('<div class="section-title">about us / 关于我们</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">Crystal packaging, care and ways to contact Little Otter / 水晶包装、保养与联系方式</div>', unsafe_allow_html=True)
@@ -1264,7 +1116,7 @@ elif current_page == "about":
     st.markdown(about_html, unsafe_allow_html=True)
 
 
-# --- 12. Footer ---
+# --- 11. Footer ---
 st.markdown(
 """
 <div class="site-footer">
