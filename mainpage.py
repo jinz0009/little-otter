@@ -892,7 +892,7 @@ elif current_page == "collections":
 
     else:
         st.markdown('<div class="section-title">the collection / 水晶系列</div>', unsafe_allow_html=True)
-        st.markdown('<div class="section-subtitle">Natural crystal bracelets and handcrafted energy pieces / 天然水晶手作能量系列</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-subtitle">Natural crystal bracelets and handcrafted pieces / 天然水晶手作系列</div>', unsafe_allow_html=True)
 
         collection_html = '<div class="collection-grid">'
 
